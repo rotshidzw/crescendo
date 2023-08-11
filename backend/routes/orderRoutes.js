@@ -3,8 +3,7 @@ const router = express.Router();
 const orderController = require('../controllers/orderController');
 
 // Define routes
-router.post('/api/orders', orderController.createOrder);
-router.get('/api/orders/:orderId', orderController.getOrderById);
-// Add more routes for other order operations
+router.post('/orders', orderController.createOrder);
+router.get('/orders/:orderId', orderController.getOrderById);
 
 module.exports = router;

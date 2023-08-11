@@ -1,6 +1,6 @@
-const request = require('supertest');
-const app = require('../app'); // Assuming your Express app is in app.js
 const mongoose = require('mongoose');
+const request = require('supertest');
+const app = require('../app');
 const Order = require('../models/Order');
 
 describe('Order API', () => {
@@ -11,15 +11,18 @@ describe('Order API', () => {
     });
   });
 
+  afterEach(async () => {
+    await Order.deleteMany(); // Clear the orders collection after each test
+  });
+
   afterAll(async () => {
-    await mongoose.connection.db.dropDatabase();
     await mongoose.disconnect();
   });
 
   describe('POST /api/orders', () => {
     it('should create a new order', async () => {
       const newOrder = {
-        userId: 'user_id_here', // Replace with actual user ID
+        userId: new mongoose.Types.ObjectId(), // Generate a valid ObjectId
         products: [
           { productId: 'product_id_1', quantity: 2 },
           { productId: 'product_id_2', quantity: 3 },
@@ -39,7 +42,7 @@ describe('Order API', () => {
     it('should get an order by orderId', async () => {
       // Create a test order in the database
       const testOrder = await Order.create({
-        userId: 'user_id_here', // Replace with actual user ID
+        userId: new mongoose.Types.ObjectId(), // Generate a valid ObjectId
         products: [
           { productId: 'product_id_1', quantity: 2 },
           { productId: 'product_id_2', quantity: 3 },
@@ -50,10 +53,9 @@ describe('Order API', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('success', true);
-      expect(response.body.data).toHaveProperty('userId', 'user_id_here');
+      expect(response.body.data).toHaveProperty('userId', testOrder.userId.toString());
     });
   });
 
   // Add more test cases for other order operations
-
 });

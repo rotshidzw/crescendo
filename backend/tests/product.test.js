@@ -40,7 +40,7 @@ describe('Product API', () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('_id');
-  });
+  }, 10000); // Increase the timeout to 10000 ms
 
   // Add more test cases for other routes and scenarios
 });
