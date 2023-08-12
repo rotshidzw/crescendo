@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app'); // Assuming your app is exported from app.js
+const app = require('../app');   // Assuming your app is exported from app.js
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
 
@@ -10,6 +10,7 @@ beforeAll(async () => {
     useUnifiedTopology: true,
   });
 });
+
 
 // Disconnect from the test database after running tests
 afterAll(async () => {
